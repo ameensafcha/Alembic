@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { gsap } from "gsap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { coverScreen } from "../../utils/animations";
 
 const menuData = [
   {
@@ -73,8 +74,10 @@ function closestEdge(x, y, w, h) {
   return Object.keys(edges).reduce((a, b) => (edges[a] < edges[b] ? a : b));
 }
 
-const MenuItem = ({ label, speed, items, route }) => {
+const MenuItem = ({ label, speed, items, route, onNavClose }) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const isActive = pathname === route;
   const itemRef = useRef(null);
   const marqueeRef = useRef(null);
   const marqueeInnerRef = useRef(null);
@@ -118,9 +121,9 @@ const MenuItem = ({ label, speed, items, route }) => {
       {/* Main button
           ↓ leading-[0.9] — line height kam karo, number ghataao jitna tight chahiye */}
       <button
-        className="font-[font2] block w-full relative cursor-pointer bg-transparent border-0 outline-none text-white uppercase tracking-[-0.02em] leading-[0.9] py-2 px-[1vw] select-none"
-        style={{ fontSize: "8vw" }}
-        onClick={() => navigate(route)}
+        className="font-[font2] block w-full relative bg-transparent border-0 outline-none uppercase tracking-[-0.02em] leading-[0.9] py-2 px-[1vw] select-none"
+        style={{ fontSize: "8vw", color: isActive ? "#dcff50" : "white", cursor: isActive ? "default" : "pointer" }}
+        onClick={() => !isActive && coverScreen(() => { onNavClose(); navigate(route); })}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -174,19 +177,16 @@ const MenuItem = ({ label, speed, items, route }) => {
   );
 };
 
-const FullScreenNav = () => {
+const FullScreenNav = ({ onClose, onNavClose }) => {
   return (
-    <div className="overflow-hidden">
-      <div className="flex fixed z-4  top-0 w-full items-start justify-between">
+    <div className="fixed inset-0 z-20 overflow-hidden">
+      <div className="flex fixed z-20 top-0 w-full items-start justify-between">
         <div className="text-black text-3xl font-bold bg-yellow-600 text-center p-1 ml-2 mt-2">
           Logo
         </div>
 
-        <div className="h-32 w-32 relative  overflow-hidden m-1">
-         
+        <div onClick={onClose} className="h-32 w-32 relative overflow-hidden m-1 cursor-pointer">
           <div className="h-40 w-1 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-white"></div>
-
-         
           <div className="h-40 w-1 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-white"></div>
         </div>
       </div>
@@ -198,7 +198,7 @@ const FullScreenNav = () => {
       <div className="bg-[#111] text-white w-full min-h-screen flex items-center justify-center py-16">
         <nav className="w-full">
           {menuData.map((item) => (
-            <MenuItem key={item.label} {...item} />
+            <MenuItem key={item.label} {...item} onNavClose={onNavClose} />
           ))}
         </nav>
       </div>

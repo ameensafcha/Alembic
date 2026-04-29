@@ -38,3 +38,54 @@ export const revealScreen = () => {
     },
   });
 };
+
+
+export const openNavAnimation = (onComplete) => {
+  const parent = document.getElementById("stair-parent");
+  const stairs = document.querySelectorAll(".stair");
+
+  if (!parent || stairs.length === 0) return onComplete?.();
+
+  gsap.timeline()
+    .set(parent, { display: "block", pointerEvents: "all" })
+    .set(stairs, { y: "-100%" })
+    .to(stairs, {
+      y: "0%",
+      stagger: { amount: 0.2 },
+      duration: 0.5,
+      ease: "power2.inOut",
+      onComplete: () => onComplete?.(),
+    })
+    .to(stairs, {
+      y: "100%",
+      stagger: { amount: 0.2 },
+      duration: 0.5,
+      ease: "power2.inOut",
+      onComplete: () => gsap.set(parent, { display: "none", pointerEvents: "none" }),
+    });
+};
+
+export const closeNavAnimation = (onComplete) => {
+  const parent = document.getElementById("stair-parent");
+  const stairs = document.querySelectorAll(".stair");
+
+  if (!parent || stairs.length === 0) return onComplete?.();
+
+  gsap.timeline()
+    .set(parent, { display: "block", pointerEvents: "all" })
+    .set(stairs, { y: "100%" })
+    .to(stairs, {
+      y: "0%",
+      stagger: { amount: -0.2 },
+      duration: 0.5,
+      ease: "power2.inOut",
+      onComplete: () => onComplete?.(),
+    })
+    .to(stairs, {
+      y: "-100%",
+      stagger: { amount: -0.2 },
+      duration: 0.5,
+      ease: "power2.inOut",
+      onComplete: () => gsap.set(parent, { display: "none", pointerEvents: "none" }),
+    });
+};
