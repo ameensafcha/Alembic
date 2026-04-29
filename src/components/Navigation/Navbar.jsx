@@ -1,10 +1,24 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
+import gsap from "gsap";
 
 const Navbar = ({ onOpen }) => {
   const navGreenRef = useRef(null);
+  const navRef = useRef(null);
+
+  useEffect(() => {
+    const hide = () => gsap.set(navRef.current, { opacity: 0 });
+    const show = () => gsap.to(navRef.current, { opacity: 1, duration: 0.5, ease: "power2.out" });
+
+    window.addEventListener("NAVBAR_HIDE", hide);
+    window.addEventListener("NAVBAR_SHOW", show);
+    return () => {
+      window.removeEventListener("NAVBAR_HIDE", hide);
+      window.removeEventListener("NAVBAR_SHOW", show);
+    };
+  }, []);
 
   return (
-    <div className="flex fixed z-10 top-0 w-full items-start justify-between">
+    <div ref={navRef} className="flex fixed z-10 top-0 w-full items-start justify-between">
       <div className="text-black text-3xl font-bold bg-yellow-600 text-center p-1 ml-2 mt-2">
         Logo
       </div>

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { useNavigate, useLocation } from "react-router-dom";
 import { coverScreen } from "../../utils/animations";
@@ -177,15 +177,28 @@ const MenuItem = ({ label, speed, items, route, onNavClose }) => {
   );
 };
 
-const FullScreenNav = ({ onClose, onNavClose }) => {
+const FullScreenNav = ({ isNavOpen, onClose, onNavClose }) => {
+  const navRef = useRef(null);
+  const closeIconRef = useRef(null);
+
+  useEffect(() => {
+    if (isNavOpen) {
+      gsap.to(navRef.current, { y: "0%", duration: 0.8, ease: "power3.inOut" });
+      gsap.to(closeIconRef.current, { opacity: 1, duration: 0.5, delay: 0.6, ease: "power2.out" });
+    } else {
+      gsap.set(closeIconRef.current, { opacity: 0 });
+      gsap.set(navRef.current, { y: "-100%" });
+    }
+  }, [isNavOpen]);
+
   return (
-    <div className="fixed inset-0 z-20 overflow-hidden">
+    <div ref={navRef} className="fixed inset-0 z-20 overflow-hidden" style={{ transform: "translateY(-100%)" }}>
       <div className="flex fixed z-20 top-0 w-full items-start justify-between">
         <div className="text-black text-3xl font-bold bg-yellow-600 text-center p-1 ml-2 mt-2">
           Logo
         </div>
 
-        <div onClick={onClose} className="h-32 w-32 relative overflow-hidden m-1 cursor-pointer">
+        <div ref={closeIconRef} onClick={() => gsap.to(navRef.current, { y: "-100%", duration: 0.8, ease: "power3.inOut", onComplete: onClose })} className="h-32 w-32 relative overflow-hidden m-1 cursor-pointer" style={{ opacity: 0 }}>
           <div className="h-40 w-1 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-white"></div>
           <div className="h-40 w-1 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-white"></div>
         </div>
