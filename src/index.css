@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: font1;
+  src: url(/fonts/Lausanne-300.woff2) format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: font2;
+  src: url(/fonts/Lausanne-500.woff2) format('woff2');
+  font-display: swap;
+}
+
+body {
+  /* background-color: #111; */
+  color: aliceblue;
+}
+
+.move {
+  display: flex;
+  width: max-content; /* Yeh zaroori hai taaki width content ke hisaab se faile */
+  animation: moveAnimation 15s linear infinite;
+}
+
+@keyframes moveAnimation {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* Agar content 2 baar repeat hai toh -50% use karo */
+}
