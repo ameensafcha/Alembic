@@ -180,6 +180,8 @@ const MenuItem = ({ label, speed, items, route, onNavClose }) => {
 const FullScreenNav = ({ isNavOpen, onClose, onNavClose }) => {
   const navRef = useRef(null);
   const closeIconRef = useRef(null);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     if (isNavOpen) {
@@ -194,8 +196,11 @@ const FullScreenNav = ({ isNavOpen, onClose, onNavClose }) => {
   return (
     <div ref={navRef} className="fixed inset-0 z-20 overflow-hidden" style={{ transform: "translateY(-100%)" }}>
       <div className="flex fixed z-20 top-0 w-full items-start justify-between">
-        <div className="text-black text-3xl font-bold bg-yellow-600 text-center p-1 ml-2 mt-2">
-          Logo
+        <div
+          onClick={() => pathname !== "/" && coverScreen(() => { onNavClose(); navigate("/"); })}
+          className="text-3xl font-bold text-center p-1 ml-2 mt-2 cursor-pointer"
+        >
+          <h1 className="uppercase text-white">Alembic</h1>
         </div>
 
         <div ref={closeIconRef} onClick={() => gsap.to(navRef.current, { y: "-100%", duration: 0.8, ease: "power3.inOut", onComplete: onClose })} className="h-32 w-32 relative overflow-hidden m-1 cursor-pointer" style={{ opacity: 0 }}>
