@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { coverScreen } from "../../utils/animations";
 
 const menuData = [
@@ -27,6 +28,33 @@ const menuData = [
       {
         text: "Big Molly",
         img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=300&q=80",
+        bg: "#c8a2b8",
+      },
+    ],
+  },
+  {
+    label: "About",
+    route: "/about",
+    speed: "28s",
+    items: [
+      {
+        text: "Our Story",
+        img: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=300&q=80",
+        bg: "#b8c8a2",
+      },
+      {
+        text: "The Process",
+        img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&q=80",
+        bg: "#c8b8a2",
+      },
+      {
+        text: "Our Team",
+        img: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=300&q=80",
+        bg: "#a2b8c8",
+      },
+      {
+        text: "Timeline",
+        img: "https://images.unsplash.com/photo-1558655146-d09347e92766?w=300&q=80",
         bg: "#c8a2b8",
       },
     ],
@@ -182,6 +210,14 @@ const FullScreenNav = ({ isNavOpen, onClose, onNavClose }) => {
   const closeIconRef = useRef(null);
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { i18n } = useTranslation();
+
+  const toggleLang = () => {
+    const newLang = i18n.language === 'en' ? 'ar' : 'en';
+    i18n.changeLanguage(newLang);
+    document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = newLang;
+  };
 
   useEffect(() => {
     if (isNavOpen) {
@@ -196,11 +232,21 @@ const FullScreenNav = ({ isNavOpen, onClose, onNavClose }) => {
   return (
     <div ref={navRef} className="fixed inset-0 z-20 overflow-hidden" style={{ transform: "translateY(-100%)" }}>
       <div className="flex fixed z-20 top-0 w-full items-start justify-between">
-        <div
-          onClick={() => pathname !== "/" && coverScreen(() => { onNavClose(); navigate("/"); })}
-          className="text-3xl font-bold text-center p-1 ml-2 mt-2 cursor-pointer"
-        >
-          <h1 className="uppercase text-white">Alembic</h1>
+        <div className="flex items-center gap-4">
+          <div
+            onClick={() => pathname !== "/" && coverScreen(() => { onNavClose(); navigate("/"); })}
+            className="text-3xl font-bold text-center p-1 ml-2 mt-2 cursor-pointer"
+          >
+            <h1 className="uppercase text-white">Alembic</h1>
+          </div>
+
+          {/* Language Toggle */}
+          <button
+            onClick={toggleLang}
+            className="mt-2 px-3 py-1 text-xs uppercase tracking-widest border border-white/30 text-white hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
+          >
+            {i18n.language === 'en' ? 'عربي' : 'EN'}
+          </button>
         </div>
 
         <div ref={closeIconRef} onClick={() => gsap.to(navRef.current, { y: "-100%", duration: 0.8, ease: "power3.inOut", onComplete: onClose })} className="h-32 w-32 relative overflow-hidden m-1 cursor-pointer" style={{ opacity: 0 }}>

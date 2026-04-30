@@ -1,0 +1,51 @@
+{
+  "hero": {
+    "line1": "The spark for",
+    "line2": "all",
+    "line3": "things",
+    "line4": "creative"
+  },
+  "nav": {
+    "projects": "Projects",
+    "agents": "Agents",
+    "about": "About"
+  },
+  "info": {
+    "heroTitle1": "Digital",
+    "heroTitle2": "Excellence",
+    "heroSub": "Designing the unseen. Engineering the impossible.",
+    "bgText": "OBLIVION",
+    "valueLabel": "Value Proposition",
+    "valueText": "We bridge the gap between aesthetics and performance.",
+    "valueTextFaded": "Delivering scalable digital products that drive business forward.",
+    "featuredLabel": "Featured Work",
+    "caseStudy": "View Case Study",
+    "aboutLabel": "About Us",
+    "aboutText1": "We are an independent digital agency.",
+    "aboutText2": "Working at the intersection of logical engineering and creative thinking.",
+    "aboutText3": "We don't just build websites; we engineer digital ecosystems.",
+    "statYears": "Years Experience",
+    "statProjects": "Projects Completed",
+    "ctaTitle1": "Got an",
+    "ctaTitle2": "Idea?",
+    "ctaSub": "Stop overthinking. Start building. Let's talk about how to bring your next big project to life.",
+    "ctaButton": "Start a Project"
+  },
+  "projects": {
+    "p1Title": "Aura\nSystems",
+    "p1Desc": "Complete architectural overhaul for a fintech data provider. Redesigned the user interface to boost processing speed by 400%.",
+    "p2Title": "Nexus\nProtocol",
+    "p2Desc": "Seamless Web3 onboarding experience design. We removed complexity to create an easy path for new crypto users.",
+    "p3Title": "Vertex\nDynamics",
+    "p3Desc": "E-commerce platform optimization resulting in a 35% increase in conversion rate. Custom headless Shopify architecture with Sanity CMS."
+  },
+  "footer": {
+    "cta": "Let's work\ntogether",
+    "tagline": "The spark for all things creative.",
+    "navLabel": "Navigation",
+    "contactLabel": "Contact",
+    "socialsLabel": "Socials",
+    "copyright": "© 2026 Alembic. All rights reserved.",
+    "builtBy": "Designed & Built by Alembic"
+  }
+}
