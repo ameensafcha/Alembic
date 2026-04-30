@@ -8,7 +8,12 @@
   "nav": {
     "projects": "Projects",
     "agents": "Agents",
-    "about": "About"
+    "about": "About",
+    "contact": "Contact"
+  },
+  "contact": {
+    "title1": "Let's build",
+    "title2": "Something Great"
   },
   "info": {
     "heroTitle1": "Digital",
@@ -37,7 +42,17 @@
     "p2Title": "Nexus\nProtocol",
     "p2Desc": "Seamless Web3 onboarding experience design. We removed complexity to create an easy path for new crypto users.",
     "p3Title": "Vertex\nDynamics",
-    "p3Desc": "E-commerce platform optimization resulting in a 35% increase in conversion rate. Custom headless Shopify architecture with Sanity CMS."
+    "p3Desc": "E-commerce platform optimization resulting in a 35% increase in conversion rate. Custom headless Shopify architecture with Sanity CMS.",
+    "p4Title": "Cyber\nPulse",
+    "p4Desc": "Real-time network security monitoring dashboard with AI-driven threat detection and visualization.",
+    "p5Title": "Lumina\nCreative",
+    "p5Desc": "Brand identity and immersive web experience for a high-end photography studio, focusing on minimal aesthetics.",
+    "p6Title": "Solaris\nHub",
+    "p6Desc": "Smart home integration platform for energy efficiency monitoring and automation using IoT technology.",
+    "p7Title": "Titan\nLogistics",
+    "p7Desc": "Supply chain optimization tool using blockchain for transparent and efficient tracking of global shipments.",
+    "p8Title": "Oceanic\nBlue",
+    "p8Desc": "Educational platform focused on marine conservation, featuring interactive 3D models of coral reefs."
   },
   "footer": {
     "cta": "Let's work\ntogether",

@@ -13,6 +13,7 @@ const quickLinks = [
   { label: 'About', path: '/about' },
   { label: 'Projects', path: '/projects' },
   { label: 'Agents', path: '/agents' },
+  { label: 'Contact', path: '/contact' },
 ];
 
 const socials = [
@@ -98,21 +99,21 @@ const Footer = () => {
 
         {/* Logo */}
         <div>
-          <h3 className="text-3xl font-[font2] uppercase tracking-tight mb-4">Alembic</h3>
-          <p className="text-sm opacity-40 leading-relaxed">
+          <h3 className="text-4xl font-[font2] uppercase tracking-tight mb-4">Alembic</h3>
+          <p className="text-base font-[font1] opacity-40 leading-relaxed">
             {t('footer.tagline')}
           </p>
         </div>
 
         {/* Quick Links */}
         <div>
-          <h4 className="text-xs uppercase tracking-widest opacity-40 mb-6">{t('footer.navLabel')}</h4>
+          <h4 className="text-sm font-[font1] uppercase tracking-widest opacity-40 mb-6">{t('footer.navLabel')}</h4>
           <ul className="flex flex-col gap-3">
             {quickLinks.map((link) => (
               <li key={link.path}>
                 <button
                   onClick={() => navigate(link.path)}
-                  className="text-base hover:opacity-60 transition-opacity duration-300 cursor-pointer"
+                  className="text-lg font-[font1] hover:opacity-60 transition-opacity duration-300 cursor-pointer"
                 >
                   {link.label}
                 </button>
@@ -123,36 +124,36 @@ const Footer = () => {
 
         {/* Contact */}
         <div>
-          <h4 className="text-xs uppercase tracking-widest opacity-40 mb-6">Contact</h4>
+          <h4 className="text-sm font-[font1] uppercase tracking-widest opacity-40 mb-6">Contact</h4>
           <ul className="flex flex-col gap-4">
             <li className="flex items-center gap-3">
-              <Mail size={16} strokeWidth={1.5} className="opacity-40" />
-              <a href="mailto:hello@alembic.studio" className="text-sm hover:opacity-60 transition-opacity duration-300">
+              <Mail size={18} strokeWidth={1.5} className="opacity-40" />
+              <a href="mailto:hello@alembic.studio" className="text-lg font-[font1] hover:opacity-60 transition-opacity duration-300">
                 hello@alembic.studio
               </a>
             </li>
             <li className="flex items-center gap-3">
-              <Phone size={16} strokeWidth={1.5} className="opacity-40" />
-              <a href="tel:+1234567890" className="text-sm hover:opacity-60 transition-opacity duration-300">
+              <Phone size={18} strokeWidth={1.5} className="opacity-40" />
+              <a href="tel:+1234567890" className="text-lg font-[font1] hover:opacity-60 transition-opacity duration-300">
                 +1 (234) 567-890
               </a>
             </li>
             <li className="flex items-center gap-3">
-              <MapPin size={16} strokeWidth={1.5} className="opacity-40" />
-              <span className="text-sm opacity-60">New York, NY</span>
+              <MapPin size={18} strokeWidth={1.5} className="opacity-40" />
+              <span className="text-lg font-[font1] opacity-60">New York, NY</span>
             </li>
           </ul>
         </div>
 
         {/* Socials */}
         <div>
-          <h4 className="text-xs uppercase tracking-widest opacity-40 mb-6">Socials</h4>
+          <h4 className="text-sm font-[font1] uppercase tracking-widest opacity-40 mb-6">Socials</h4>
           <ul className="flex flex-col gap-3">
             {socials.map((s) => (
               <li key={s.label}>
                 <a
                   href={s.href}
-                  className="text-sm opacity-60 hover:opacity-100 transition-opacity duration-300"
+                  className="text-lg font-[font1] opacity-60 hover:opacity-100 transition-opacity duration-300"
                 >
                   {s.label}
                 </a>
@@ -167,10 +168,10 @@ const Footer = () => {
 
       {/* Copyright */}
       <div ref={copyrightRef} className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
-        <p className="text-xs opacity-30 uppercase tracking-widest">
+        <p className="text-sm font-[font1] opacity-30 uppercase tracking-widest">
           &copy; 2026 Alembic. All rights reserved.
         </p>
-        <p className="text-xs opacity-30 uppercase tracking-widest">
+        <p className="text-sm font-[font1] opacity-30 uppercase tracking-widest">
           Designed & Built by Alembic
         </p>
       </div>

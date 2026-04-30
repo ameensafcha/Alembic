@@ -86,6 +86,33 @@ const menuData = [
       },
     ],
   },
+  {
+    label: "Contact",
+    route: "/contact",
+    speed: "22s",
+    items: [
+      {
+        text: "Say Hello",
+        img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&q=80",
+        bg: "#c8b8a2",
+      },
+      {
+        text: "New Projects",
+        img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=300&q=80",
+        bg: "#a2b8c8",
+      },
+      {
+        text: "Start Today",
+        img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=300&q=80",
+        bg: "#b8c8a2",
+      },
+      {
+        text: "Get in touch",
+        img: "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=300&q=80",
+        bg: "#c8a2b8",
+      },
+    ],
+  },
 ];
 
 function distMetric(x, y, x2, y2) {
@@ -105,6 +132,8 @@ function closestEdge(x, y, w, h) {
 const MenuItem = ({ label, speed, items, route, onNavClose }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { i18n, t } = useTranslation();
+  const isRTL = i18n.language === 'ar';
   const isActive = pathname === route;
   const itemRef = useRef(null);
   const marqueeRef = useRef(null);
@@ -146,8 +175,6 @@ const MenuItem = ({ label, speed, items, route, onNavClose }) => {
         borderBottom: "1px solid rgba(255,255,255,0.15)",
       }}
     >
-      {/* Main button
-          ↓ leading-[0.9] — line height kam karo, number ghataao jitna tight chahiye */}
       <button
         className="font-[font2] block w-full relative bg-transparent border-0 outline-none uppercase tracking-[-0.02em] leading-[0.9] py-2 px-[1vw] select-none"
         style={{ fontSize: "8vw", color: isActive ? "#dcff50" : "white", cursor: isActive ? "default" : "pointer" }}
@@ -155,7 +182,7 @@ const MenuItem = ({ label, speed, items, route, onNavClose }) => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {label}
+        {t(`nav.${label.toLowerCase()}`)}
       </button>
 
       {/* Marquee overlay */}
@@ -170,16 +197,15 @@ const MenuItem = ({ label, speed, items, route, onNavClose }) => {
           style={{ transform: "translate3d(0, -101%, 0)" }}
         >
           <div
-            className="h-full flex items-center relative will-change-transform"
+            className={`h-full flex items-center relative will-change-transform ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}
             style={{
               width: "fit-content",
-              animation: `marquee ${speed} linear infinite`,
+              animation: `${isRTL ? 'marqueeRTL' : 'marquee'} ${speed} linear infinite`,
             }}
             aria-hidden="true"
           >
             {loopedItems.map((item, i) => (
               <React.Fragment key={i}>
-                {/* ↓ leading-[0.9] — same as button upar wala */}
                 <span
                   className="font-[font2] whitespace-nowrap uppercase tracking-[-0.02em] leading-[0.9] px-[1.5vw] text-[#111]"
                   style={{ fontSize: "8vw" }}
@@ -187,9 +213,6 @@ const MenuItem = ({ label, speed, items, route, onNavClose }) => {
                   {item.text}
                 </span>
 
-                {/* IMAGE SIZE:
-                    width  → 8vw ghata kar image choti karo, 15vw bada kar badi karo
-                    height → 50% choti, 80% badi  */}
                 <img
                   src={item.img}
                   alt={item.text}
@@ -214,9 +237,8 @@ const FullScreenNav = ({ isNavOpen, onClose, onNavClose }) => {
 
   const toggleLang = () => {
     const newLang = i18n.language === 'en' ? 'ar' : 'en';
-    i18n.changeLanguage(newLang);
-    document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.lang = newLang;
+    localStorage.setItem('language', newLang);
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -231,11 +253,11 @@ const FullScreenNav = ({ isNavOpen, onClose, onNavClose }) => {
 
   return (
     <div ref={navRef} className="fixed inset-0 z-20 overflow-hidden" style={{ transform: "translateY(-100%)" }}>
-      <div className="flex fixed z-20 top-0 w-full items-start justify-between">
-        <div className="flex items-center gap-4">
+      <div className={`flex fixed z-20 top-0 w-full items-start justify-between ${i18n.language === 'ar' ? 'flex-row-reverse' : ''}`}>
+        <div className={`flex items-center gap-4 ${i18n.language === 'ar' ? 'flex-row-reverse' : ''}`}>
           <div
             onClick={() => pathname !== "/" && coverScreen(() => { onNavClose(); navigate("/"); })}
-            className="text-3xl font-bold text-center p-1 ml-2 mt-2 cursor-pointer"
+            className={`text-3xl font-bold text-center p-1 ${i18n.language === 'ar' ? 'mr-2' : 'ml-2'} mt-2 cursor-pointer`}
           >
             <h1 className="uppercase text-white">Alembic</h1>
           </div>
@@ -257,6 +279,9 @@ const FullScreenNav = ({ isNavOpen, onClose, onNavClose }) => {
       <style>{`
         @keyframes marquee {
           100% { transform: translate3d(-50%, 0, 0); }
+        }
+        @keyframes marqueeRTL {
+          100% { transform: translate3d(50%, 0, 0); }
         }
       `}</style>
       <div className="bg-[#111] text-white w-full min-h-screen flex items-center justify-center py-16">

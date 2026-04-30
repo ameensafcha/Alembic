@@ -16,6 +16,17 @@ body {
   color: aliceblue;
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 .move {
   display: flex;
   width: max-content; /* Yeh zaroori hai taaki width content ke hisaab se faile */

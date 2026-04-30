@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useTranslation } from 'react-i18next';
+import { projectsData } from '../../data/projects';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,37 +12,14 @@ export default function Info() {
   const pinContainerRef = useRef(null);
   const scrollWrapperRef = useRef(null);
 
-  const projectsData = [
-    {
-      id: '01',
-      title: t('projects.p1Title'),
-      desc: t('projects.p1Desc'),
-      img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop',
-      theme: 'bg-black',
-      border: ''
-    },
-    {
-      id: '02',
-      title: t('projects.p2Title'),
-      desc: t('projects.p2Desc'),
-      img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2000&auto=format&fit=crop',
-      theme: 'bg-zinc-950',
-      border: 'border-l border-zinc-800'
-    },
-    {
-      id: '03',
-      title: t('projects.p3Title'),
-      desc: t('projects.p3Desc'),
-      img: 'https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2000&auto=format&fit=crop',
-      theme: 'bg-black',
-      border: 'border-l border-zinc-800'
-    }
-  ];
+  // Show only first 5 projects on home
+  const featuredProjects = projectsData.slice(0, 5);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const scrollWrapper = scrollWrapperRef.current;
       const projectPanels = gsap.utils.toArray('.project-panel');
+      const isRTL = document.documentElement.dir === 'rtl';
 
       const scrollTween = gsap.to(scrollWrapper, {
         x: () => -(scrollWrapper.scrollWidth - window.innerWidth) + "px",
@@ -50,6 +28,7 @@ export default function Info() {
           trigger: pinContainerRef.current,
           pin: true,
           scrub: 1,
+          start: "top top",
           end: () => "+=" + (scrollWrapper.scrollWidth - window.innerWidth),
           invalidateOnRefresh: true,
         }
@@ -75,7 +54,7 @@ export default function Info() {
       projectPanels.forEach((panel) => {
         const elements = panel.querySelectorAll('.space-y-6 > *, .anim-img');
         gsap.from(elements, {
-          x: 80,
+          x: isRTL ? -80 : 80,
           opacity: 0,
           stagger: 0.1,
           duration: 0.8,
@@ -121,9 +100,9 @@ export default function Info() {
 
       {/* 3. FEATURED WORK (Horizontal Pinned Scroll) */}
       <section ref={pinContainerRef} className="h-screen w-full relative overflow-hidden bg-black">
-        <div ref={scrollWrapperRef} className="flex w-max h-full">
-          {projectsData.map((project, index) => (
-            <article key={project.id} className={`project-panel w-screen h-screen flex-shrink-0 flex items-center px-8 md:px-24 ${project.theme} ${project.border}`}>
+        <div ref={scrollWrapperRef} className="flex w-max h-full" style={{ direction: 'ltr' }}>
+          {featuredProjects.map((project, index) => (
+            <article key={project.id} className={`project-panel w-screen h-screen flex-shrink-0 flex items-center px-8 md:px-24 ${project.theme} ${project.border}`} style={{ direction: document.documentElement.dir }}>
               <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
                 <div className={`space-y-6 ${index % 2 === 0 ? 'order-2 md:order-1' : ''}`}>
@@ -131,10 +110,10 @@ export default function Info() {
                     {project.id} / {t('info.featuredLabel')}
                   </span>
                   <h3 className="text-5xl md:text-7xl font-bold whitespace-pre-line">
-                    {project.title}
+                    {t(project.titleKey)}
                   </h3>
                   <p className="text-lg text-zinc-400 max-w-md">
-                    {project.desc}
+                    {t(project.descKey)}
                   </p>
                   <button className="mt-4 px-6 py-3 border border-white rounded-full hover:bg-white hover:text-black transition-colors duration-300">
                     {t('info.caseStudy')}
@@ -143,8 +122,8 @@ export default function Info() {
 
                 <div className={`h-[50vh] md:h-[70vh] bg-zinc-800 rounded-2xl overflow-hidden relative group anim-img ${index % 2 === 0 ? 'order-1 md:order-2' : ''}`}>
                   <img
-                    src={project.img}
-                    alt={project.title.replace('\n', ' ')}
+                    src={project.image}
+                    alt={t(project.titleKey).replace('\n', ' ')}
                     className="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105"
                   />
                 </div>
